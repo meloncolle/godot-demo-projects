@@ -93,6 +93,8 @@ directional_shadow_max_distance = 40.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0tcge")
 
+[node name="FmodListener3D2" type="FmodListener3D" parent="."]
+
 [node name="Player" parent="." instance=ExtResource("2")]
 
 [node name="CameraPivot" type="Marker3D" parent="."]
@@ -180,6 +182,14 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "Press Space or Enter to retry"
+
+[node name="FmodBankLoader" type="FmodBankLoader" parent="."]
+bank_paths = ["res://addons/fmod/Build/Desktop/Master.strings.bank", "res://addons/fmod/Build/Desktop/Master.bank"]
+
+[node name="Die" type="FmodEventEmitter3D" parent="."]
+event_name = "event:/Die"
+event_guid = "{487d3682-ef07-413b-9921-626c131603fc}"
+allow_fadeout = false
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]

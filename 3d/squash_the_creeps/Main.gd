@@ -31,5 +31,6 @@ func _on_mob_timer_timeout():
 
 
 func _on_player_hit():
+	$Die.play()
 	$MobTimer.stop()
 	$UserInterface/Retry.show()
