@@ -1,62 +1,42 @@
-# Godot demo projects
+# Squash the Creeps (3D)
 
-Each folder containing a `project.godot` file is a demo project meant to
-be used with [Godot Engine](https://godotengine.org), the open source
-2D and 3D game engine.
+This is a simple game where your character must move
+and jump to squash as many enemies for as long as possible.
+You gain 1 point for every enemy squashed.
 
-## Godot versions
+Controls:
 
-- The [`master`](https://github.com/godotengine/godot-demo-projects) branch is compatible with Godot's `master` development branch (next 4.x release).
-- The [`3.x`](https://github.com/godotengine/godot-demo-projects/tree/3.x) branch is compatible with Godot's `3.x` development branch (next 3.x release).
-- The other branches are compatible with the matching stable versions of Godot:
-  - [`4.2`](https://github.com/godotengine/godot-demo-projects/tree/4.2)
-    branch for Godot 4.2.x.
-  - [`4.1`](https://github.com/godotengine/godot-demo-projects/tree/4.1)
-    branch for Godot 4.1.x.
-  - [`4.0`](https://github.com/godotengine/godot-demo-projects/tree/4.0)
-    branch for Godot 4.0.x.
-  - [`3.5`](https://github.com/godotengine/godot-demo-projects/tree/3.5)
-    branch for Godot 3.5.x.
-  - [`3.4`](https://github.com/godotengine/godot-demo-projects/tree/3.4)
-    branch for Godot 3.4.x.
-  - [`3.3`](https://github.com/godotengine/godot-demo-projects/tree/3.3)
-    branch for Godot 3.3.x.
-  - [`3.2`](https://github.com/godotengine/godot-demo-projects/tree/3.2)
-    branch for Godot 3.2.x.
-  - [`3.1`](https://github.com/godotengine/godot-demo-projects/tree/3.1)
-    branch for Godot 3.1.x.
-  - [`3.0`](https://github.com/godotengine/godot-demo-projects/tree/3.0)
-    branch for Godot 3.0.x.
-  - [`2.1`](https://github.com/godotengine/godot-demo-projects/tree/2.1)
-    branch for Godot 2.1.x.
+- <kbd>Up Arrow</kbd>, <kbd>W</kbd>, <kbd>Gamepad Left Stick</kbd>: Move up
+- <kbd>Down Arrow</kbd>, <kbd>S</kbd>, <kbd>Gamepad Left Stick</kbd>: Move down
+- <kbd>Left Arrow</kbd>, <kbd>Gamepad Left Stick</kbd>: Move left
+- <kbd>Right Arrow</kbd>, <kbd>Gamepad Left Stick</kbd>: Move right
+- <kbd>Space</kbd>, <kbd>Right Mouse Button</kbd>, <kbd>Gamepad A/Cross</kbd>: Jump
 
-## Importing all demos
+This is a finished version of the game featured in the
+["Your first 3D game"](https://docs.godotengine.org/en/latest/getting_started/first_3d_game/index.html)
+tutorial in the documentation. For more details,
+consider following the tutorial in the documentation.
 
-To import all demos at once in the project manager:
+This demo covers:
 
-- Clone this repository or [download a ZIP archive](https://github.com/godotengine/godot-demo-projects/archive/master.zip).
-  - If you've downloaded a ZIP archive, extract it somewhere.
-- Open the Godot project manager and click the **Scan** button on the right.
-- Choose the path to the folder containing all demos.
-- All demos should now appear in the project manager.
+- Handling player input.
+- Moving and jumping in a 3D game.
+- Spawning enemies randomly around the game arena.
+- Using the built-in animation editor to breathe life to your game.
+- Creating a complete game loop with lose conditions, score, and the ability to restart.
 
-## Try the demos in your browser
+Language: GDScript
 
-Most of the demos are exported to GitHub Pages. They can be viewed
-[here](https://godotengine.github.io/godot-demo-projects/).
+Renderer: Forward+
 
-**Note:** The performance of Godot in a browser is lower than natively on
-desktop. For the best performance, consider downloading the demos.
+Check out this demo on the asset library: https://godotengine.org/asset-library/asset/2751
 
-## Useful links
+## Screenshots
 
-- [Main website](https://godotengine.org)
-- [Source code](https://github.com/godotengine/godot)
-- [Documentation](http://docs.godotengine.org)
-- [Community hub](https://godotengine.org/community)
-- [TPS demo](https://github.com/godotengine/tps-demo)
+![Screenshot](screenshots/squash_the_creeps.webp)
 
-## License
+## Copying
 
-Those demos are distributed under the terms of the MIT license, as
-described in the [LICENSE.md](LICENSE.md) file.
+`art/House In a Forest Loop.ogg` Copyright &copy; 2012 [HorrorPen](https://opengameart.org/users/horrorpen), [CC-BY 3.0: Attribution](http://creativecommons.org/licenses/by/3.0/). Source: https://opengameart.org/content/loop-house-in-a-forest
+
+Font is "Montserrat Medium". Copyright 2011 [The Montserrat Project Authors](https://github.com/JulietaUla/Montserrat). Details are in `fonts/LICENSE.txt`.

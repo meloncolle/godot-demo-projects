@@ -1,0 +1,96 @@
+name: Godot Build
+
+env:
+  # Enable/disable individual build templates
+  ENABLE_WIN64: true
+  ENABLE_WIN32: true
+  ENABLE_LINUX: true
+
+  GODOT_VERSION: 4.4.1
+  EXPORT_NAME: ${{ vars.BUILD_NAME }} # defined in repo settings
+  PROJECT_PATH: ./
+  DEBUG_FLAG: "--export-release"
+
+on:
+  push:
+    branches: [master, develop]
+
+jobs:
+  godot-build:
+    name: Godot Build
+    runs-on: ubuntu-latest         
+    
+    steps:        
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Set Debug
+        if: ${{ (github.head_ref || github.ref_name) == 'develop' }}
+        run: |
+          echo "DEBUG_FLAG=--export-debug" >> $GITHUB_ENV
+          echo "EXPORT_NAME=${EXPORT_NAME} (DEBUG)" >> $GITHUB_ENV
+
+      - name: Download Godot
+        run: |
+          curl -Lo godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip godot.zip
+      
+      - name: Download Export Templates
+        run: |
+          curl -Lo export_templates.tpz "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          unzip export_templates.tpz
+          mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+          mv templates/* ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/
+
+      - name: Windows x64 Build
+        id: wx64-build
+        if: ${{ env.ENABLE_WIN64 == 'true' }}
+        run: |
+          mkdir -v -p build/windows_x64
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          ./Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --verbose ${DEBUG_FLAG} "Windows_x64" "$EXPORT_DIR/windows_x64/${EXPORT_NAME}.exe"
+
+      - name: Upload Artifact (Windows x64)
+        if: steps.wx64-build.outcome == 'success'
+        id: wx64-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXPORT_NAME }} - Windows x64
+          path: build/windows_x64
+
+      - name: Windows x86 Build
+        id: wx86-build
+        if: ${{ env.ENABLE_WIN32 == 'true' }}
+        run: |
+          mkdir -v -p build/windows_x86
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          ./Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --verbose ${DEBUG_FLAG} "Windows_x86" "$EXPORT_DIR/windows_x86/${EXPORT_NAME}.exe"
+
+      - name: Upload Artifact (Windows x86)
+        if: steps.wx86-build.outcome == 'success'
+        id: wx86-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXPORT_NAME }} - Windows x86
+          path: build/windows_x86
+
+      - name: Linux Build
+        id: linux-build
+        if: ${{ env.ENABLE_LINUX == 'true' }}
+        run: |
+          mkdir -v -p build/linux
+          EXPORT_DIR="$(readlink -f build)"
+          cd $PROJECT_PATH
+          ./Godot_v${GODOT_VERSION}-stable_linux.x86_64 --headless --verbose ${DEBUG_FLAG} "Linux" "$EXPORT_DIR/linux/${EXPORT_NAME}.exe"
+
+      - name: Upload Artifact (Linux)
+        if: steps.linux-build.outcome == 'success'
+        id: linux-upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXPORT_NAME }} - Linux
+          path: build/linux
